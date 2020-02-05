@@ -1,0 +1,16 @@
+{
+  "name" : "Dealership-Project",
+  "authors" : [
+    {
+      "name" : "Dallas Sloan ",
+      "email" : "dsloan4@mail.greenriver.edu"
+    },
+    {
+      "name" : "Oleg Rovinskiy",
+      "email" : "olegrovin@gmail.com"
+    }
+  ],
+  "require" : {
+    "bcosca/fatfree-core" : "dev-master"
+  }
+}
