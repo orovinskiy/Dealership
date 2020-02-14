@@ -1,0 +1,16 @@
+.jumbotron{
+    padding: 2rem 1rem;
+    background-color: #303236;
+    color: lightgrey;
+}
+body{
+    background-image: linear-gradient(to right, #262626 , #6e6e6e,#262626);
+}
+
+.container{
+    background-color: #bdbdbd;
+}
+
+footer{
+    padding-bottom: 10%;
+}
