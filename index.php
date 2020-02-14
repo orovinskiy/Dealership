@@ -22,5 +22,13 @@ $f3->route("GET /", function () {
     echo $view->render("views/home.html");
 });
 
+//creating a payment route
+//Define a default route
+$f3->route("GET /payment", function () {
+    $view = new Template();
+    echo $view->render("views/payment-form.html");
+});
+
+
 //Run f3
 $f3->run();
