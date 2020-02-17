@@ -7,10 +7,44 @@ body{
     background-image: linear-gradient(to right, #262626 , #6e6e6e,#262626);
 }
 
+.button{
+    margin: 3% 40%;
+    width: 170px;
+    height: 5%;
+}
+
+.checked {
+    color: orange;
+}
+
 .container{
     background-color: #bdbdbd;
 }
 
-footer{
-    padding-bottom: 10%;
+.comments{
+    padding: 1.5% 3%;
+    background-color: #e0e0e0;
+    border-radius: 1%;
+    margin-bottom: 2%;
 }
+
+footer{
+    padding-bottom: 1px;
+}
+
+.founders{
+    border-radius: 2%;
+    margin-top: 7%;
+}
+
+.headerP{
+    padding: 2% 6%;
+}
+
+h2{
+    text-align: center;
+    font-weight: lighter;
+    margin-bottom: 2%;
+}
+
+
