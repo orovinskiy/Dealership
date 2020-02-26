@@ -16,10 +16,16 @@ require("vendor/autoload.php");
 //Instantiate F3
 $f3 = Base::instance();
 
+
 //Define a default route
 $f3->route("GET /", function () {
     $view = new Template();
     echo $view->render("views/home.html");
+});
+
+$f3->route("GET /listings", function () {
+    $view = new Template();
+    echo $view->render("views/lists.html");
 });
 
 //creating a payment route
