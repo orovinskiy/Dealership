@@ -1,15 +1,27 @@
 <?php
+
+//error reporting..
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
+//$key = array_key_first($_POST);
+//var_dump($_POST); '.$_POST["key"].'
 echo '
-        <section class="text-light mb-5 card">
-            <img class="card-img-top img-fluid" src="pictures/linkedIn.PNG" alt="LinkedIn Profile">
+        <section class="text-dark mb-5 card">
+            <img class="card-img-top img-fluid" 
+            src="images/carPics/'.$_POST["Identification"]["Make"].'.jpg" alt="LinkedIn Profile">
             <div class="card-body">
-                <h3 class="card-title">Linked Profile</h3>
-                <p class="card-text">More information about myself, my skills, and work I have done. </p>
+                <h3 class="card-title">'.$_POST["Identification"]["Model Year"].'</h3>
+                <p class="card-text"></p>
+                <p class="card-text">This bad boy is '.$_POST["Engine_Information"]["Driveline"].' and
+                 its horsepower is at '.$_POST["Engine_Information"]["Engine Statistics"]["Horsepower"].'.
+                 Still not sold? Click the button below for more information!
+                 </p>
                 <div class="card-footer">
-                    <a class="text-light card-link" href="https://www.linkedin.com/in/oleg-rovinskiy-574163194/" target="_blank">Go to the page</a>
+                    <a class="text-light card-link btn btn-dark btn-block" 
+                    href="https://www.linkedin.com/in/oleg-rovinskiy-574163194/">Go to the page</a>
                 </div>
             </div>
         </section> <!-- Card -->
+    
         ';
-
-var_dump($_POST);
