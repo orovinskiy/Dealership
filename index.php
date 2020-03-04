@@ -15,7 +15,13 @@ require("vendor/autoload.php");
 
 //Instantiate F3
 $f3 = Base::instance();
+
+//create a new dealership object
+$db = new Database();
+
+
 $f3->set("div",array(0,1,2,3,4,5,6,7,8,9));
+
 
 //Define a default route
 $f3->route("GET /", function () {
@@ -30,10 +36,47 @@ $f3->route("GET /listings", function () {
 
 //creating a payment route
 //Define a default route
-$f3->route("GET /payment", function () {
+$f3->route("GET|POST /payment", function ($f3) {
+    //instantiate a new validator object
+    $validate = new Validator();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        var_dump($_POST);
+        //add to hive to make form sticky
+        $f3->set('payment',$_POST);
+        //check to ensure form is valid
+        if($validate->validForm()){
+            //writing info to buyer table
+            $buyerID = $GLOBALS['db']->addBuyers($_POST);
+
+            //writing to payment_type table
+            $paymentID = $GLOBALS['db']->addPayment($_POST);
+            echo $paymentID;
+
+            //writing to cars_sold table --->commenting out for the moment
+            //$GLOBALS['db']->addCar($needtofigureouthowtosendcarinfo);
+
+            //writing to transaction table ---->adding car ID of 15 to just test
+            $GLOBALS['db']->addTransaction($buyerID, 17, $paymentID);
+
+            //reroute to thank you page
+            $f3->reroute("/thank");
+        }
+        else{
+            //Data was not valid
+            //Get errors and add to f3 hive
+            $f3->set('errors', $validate->getErrors());
+        }
+    }
     $view = new Template();
     echo $view->render("views/payment-form.html");
 });
+
+$f3->route("GET /thank", function () {
+    $view = new Template();
+    echo $view->render("views/thank-you.html");
+});
+
 
 
 //Run f3
