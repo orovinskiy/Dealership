@@ -15,6 +15,8 @@ require("vendor/autoload.php");
 
 //Instantiate F3
 $f3 = Base::instance();
+//create a new dealership object
+$db = new Database();
 
 
 //Define a default route
@@ -40,6 +42,19 @@ $f3->route("GET|POST /payment", function ($f3) {
         $f3->set('payment',$_POST);
         //check to ensure form is valid
         if($validate->validForm()){
+            //writing info to buyer table
+            $buyerID = $GLOBALS['db']->addBuyers($_POST);
+
+            //writing to payment_type table
+            $paymentID = $GLOBALS['db']->addPayment($_POST);
+            echo $paymentID;
+
+            //writing to cars_sold table --->commenting out for the moment
+            //$GLOBALS['db']->addCar($needtofigureouthowtosendcarinfo);
+
+            //writing to transaction table ---->adding car ID of 15 to just test
+            $GLOBALS['db']->addTransaction($buyerID, 17, $paymentID);
+
             //reroute to thank you page
             $f3->reroute("/thank");
         }
@@ -52,6 +67,12 @@ $f3->route("GET|POST /payment", function ($f3) {
     $view = new Template();
     echo $view->render("views/payment-form.html");
 });
+
+$f3->route("GET /thank", function () {
+    $view = new Template();
+    echo $view->render("views/thank-you.html");
+});
+
 
 
 //Run f3
