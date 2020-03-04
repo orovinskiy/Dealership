@@ -66,7 +66,7 @@ class Validator
         $number = preg_replace('/_/', "", $number);
         //echo "<p>$id</p>"; for de-bugging purposes
 
-        if(empty($number) || !ctype_digit($number) || !strlen($number) === 10){
+        if(empty($number) || !ctype_digit($number) || strlen($number) != 10){
             $this->_errors['number'] = "Valid contact number is required";
         }
 
