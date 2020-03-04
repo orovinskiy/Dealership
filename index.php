@@ -15,6 +15,8 @@ require("vendor/autoload.php");
 
 //Instantiate F3
 $f3 = Base::instance();
+//instantiate a new validator object
+$validate = new Validator();
 
 
 //Define a default route
