@@ -28,7 +28,7 @@ class Validator
         $this->validAddress($_POST['address']);
         $this->validCity($_POST['city']);
         $this->validState($_POST['state']);
-        $this->validZip($_POST['zipcode']);
+        $this->validZip($_POST['zipCode']);
         $this->validName($_POST['cardName']);
         $this->validCardNumber($_POST['cardNumber']);
         $this->validMonth($_POST['monthExp']);
@@ -116,7 +116,7 @@ class Validator
 
     private function validCardNumber($cardNumber)
     {
-        if(empty($address) || !ctype_digit($cardNumber) || strlen($cardNumber) != 16){
+        if(empty($cardNumber) || !ctype_digit($cardNumber) || strlen($cardNumber) != 16){
             $this->_errors['cardNumber'] = "Valid card number is required";
         }
     }
