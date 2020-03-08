@@ -29,7 +29,7 @@
       "City mph": 18,
       "Fuel Type": "Gasoline"
     },
-    "Sold": false
+    "Sold": true
   },
   {
     "Engine Information": {
@@ -61,7 +61,7 @@
       "City mph": 17,
       "Fuel Type": "Gasoline"
     },
-    "Sold": false
+    "Sold": true
   },
   {
     "Engine Information": {
@@ -103,7 +103,7 @@
         "Horsepower": 115,
         "Torque": 125
       },
-      "Hybrid": false,
+      "Hybrid": true,
       "Number of Forward Gears": 5,
       "Driveline": "Front-wheel drive"
     },
@@ -157,7 +157,7 @@
       "City mph": 23,
       "Fuel Type": "Gasoline"
     },
-    "Sold": false
+    "Sold": true
   },
   {
     "Engine Information": {

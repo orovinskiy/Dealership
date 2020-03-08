@@ -39,6 +39,7 @@ $f3->route("POST /buy/@id", function ($f3,$param) {
 
     $f3->set('make',$jsonCar['Identification']['Model Year']);
     $f3->set('pic',$jsonCar['Identification']['Make']);
+    $f3->set('id',$item);
 
     $view = new Template();
     echo $view->render("views/carDetails.html");
@@ -55,6 +56,7 @@ $f3->route("GET|POST /payment", function ($f3) {
     //instantiate a new validator object
     $validate = new Validator();
 
+    var_dump($_GET);
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         var_dump($_POST);
         //add to hive to make form sticky
