@@ -18,9 +18,10 @@ echo '
                  Still not sold? Click the button below for more information!
                  </p>
                 <div class="card-footer">
-                    <a class="text-light card-link btn btn-dark btn-block" 
-                    href="https://www.linkedin.com/in/oleg-rovinskiy-574163194/">Go to the page</a>
-                </div>
+                    <form action="buy/'.$_POST["key"].'" method="post">
+                        <button class="text-light card-link btn btn-dark btn-block" type="submit">Go to Page</button>
+                    </form>
+                </div> 
             </div>
         </section> <!-- Card -->
     

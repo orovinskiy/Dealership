@@ -29,6 +29,21 @@ $f3->route("GET /", function () {
     echo $view->render("views/home.html");
 });
 
+$f3->route("POST /buy/@id", function ($f3,$param) {
+    $item = $param['id'];
+
+    $file = file_get_contents('model/cars.json');
+    $jsonCar = json_decode($file,true);
+    $jsonCar = $jsonCar[$item];
+    //var_dump($jsonCar);
+
+    $f3->set('make',$jsonCar['Identification']['Model Year']);
+    $f3->set('pic',$jsonCar['Identification']['Make']);
+
+    $view = new Template();
+    echo $view->render("views/carDetails.html");
+});
+
 $f3->route("GET /listings", function () {
     $view = new Template();
     echo $view->render("views/lists.html");

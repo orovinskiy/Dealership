@@ -11,7 +11,7 @@ $(document).ready(function(){
             let index = 0;
 
             while(i < 10 && j < info.length){
-                if(!info[j][0]['Sold'][0]){
+                if(!info[j]['Sold']){
                     //console.log(info[j][0]['Sold']);
                     info[j].key = j;
 
