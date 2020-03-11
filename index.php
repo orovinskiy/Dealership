@@ -39,6 +39,15 @@ $f3->route("POST /buy/@id", function ($f3,$param) {
 
     $f3->set('make',$jsonCar['Identification']['Model Year']);
     $f3->set('pic',$jsonCar['Identification']['Make']);
+    $f3->set('cost',$jsonCar['Identification']['Cost']);
+    $f3->set('transmission',$jsonCar['Engine Information']['Transmission']);
+    $f3->set('engine',$jsonCar['Engine Information']['Engine Type']);
+    $f3->set('horse',$jsonCar['Engine Information']['Engine Statistics']['Horsepower']);
+    $f3->set('driveline',$jsonCar['Engine Information']['Driveline']);
+    $f3->set('classification',$jsonCar['Identification']['Classification']);
+    $f3->set('highway',$jsonCar['Fuel Information']['Highway mpg']);
+    $f3->set('city',$jsonCar['Fuel Information']['City mph']);
+    $f3->set('fuel',$jsonCar['Fuel Information']['Fuel Type']);
     $f3->set('id',$item);
 
     $view = new Template();
