@@ -77,24 +77,25 @@ class Database
     function addCar($car)
     {
         //1. Define the query
-        $sql = "INSERT INTO cars_sold (cars_id, make, model, `year`, cost)
-                VALUES(:cars_id, :make, :model, :year, :cost";
+        $sql = "INSERT INTO cars_sold (cars_info, make, model, `year`, cost)
+                VALUES(:cars_info, :make, :model, :year, :cost)";
 
         //2.prepare the statement (compiles)
         $statement = $this->_dbh->prepare($sql);
 
         //3. Bind the parameters ----> Have to work with Oleg to get the car object information
-        /*$statement->bindParam(':cars_id', $car['cardNumber']);
-        $statement->bindParam(':make', $car['cardName']);
-        $statement->bindParam(':model', $car['monthExp']);
-        $statement->bindParam(':year', $car['yearExp']);
-        $statement->bindParam(':cost', $car['cvv']);*/
+        $statement->bindParam(':cars_info', $car['Identification']['ID']);
+        $statement->bindParam(':make', $car['Identification']['Make']);
+        $statement->bindParam(':model', $car['Identification']['Model Year']);
+        $statement->bindParam(':year', $car['Identification']['Year']);
+        $statement->bindParam(':cost', $car['Identification']['Cost']);
 
         //4. Execute the statement
         $statement->execute();
 
         //Get the key of the last inserted row
         $id = $this->_dbh->lastInsertId();
+        echo "This is the Car ID: ".$id;
         return $id;
 
     }
@@ -102,15 +103,15 @@ class Database
     function addTransaction($buyerID, $carID, $paymentID)
     {
         //1. Define the query
-        $sql = "INSERT INTO transaction (buyers_id, cars_id, payment_id)
-                VALUES(:buyers_id, :cars_id, :payment_id)";
+        $sql = "INSERT INTO transaction (buyers_id, car_id, payment_id)
+                VALUES(:buyers_id, :car_id, :payment_id)";
 
         //2.prepare the statement (compiles)
         $statement = $this->_dbh->prepare($sql);
 
         //3. Bind the parameters
         $statement->bindParam(':buyers_id', $buyerID);
-        $statement->bindParam(':cars_id', $carID);
+        $statement->bindParam(':car_id', $carID);
         $statement->bindParam(':payment_id', $paymentID);
 
         //4. Execute the statement
@@ -121,6 +122,34 @@ class Database
         return $id;
 
     }
+
+    //create function to get a specific car, payment, or buyer id to prevent duplicates and to send the correct index
+    //to the transaction table
+
+    //function to get all transactions
+    function getTransactions()
+    {
+        //1. define the query
+        $sql = "SELECT transaction.transaction_id, buyers.last_name, buyers.first_name, buyers.phone, buyers.email, buyers.city, buyers.state, buyers.zip, cars_sold.make, cars_sold.model, cars_sold.year, cars_sold.cost, payment_type.type
+                FROM transaction
+                JOIN buyers ON transaction.buyers_id = buyers.buyers_id
+                JOIN cars_sold ON transaction.car_id = cars_sold.car_id
+                JOIN payment_type ON transaction.payment_id = payment_type.card_id";
+
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameter
+        //no parameter for this function
+
+        //4. Execute the statement
+        $statement->execute();
+
+        //5. Get the result
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 
 
 }

@@ -36,7 +36,9 @@ CREATE TABLE IF NOT EXISTS `buyers` (
   `state` VARCHAR(2) NULL,
   `zip` INT NULL,
   `created_at` VARCHAR(45) NULL,
-  PRIMARY KEY (`buyers_id`));
+  PRIMARY KEY (`buyers_id`),
+  CONSTRAINT UNIQUE (`last_name`, `first_name`)
+  );
 
 
 -- -----------------------------------------------------
@@ -45,12 +47,14 @@ CREATE TABLE IF NOT EXISTS `buyers` (
 DROP TABLE IF EXISTS `cars_sold` ;
 
 CREATE TABLE IF NOT EXISTS `cars_sold` (
-  `cars_id` INT NOT NULL,
+  `car_id` INT NOT NULL AUTO_INCREMENT,
+  `cars_info` VARCHAR(255) NOT NULL UNIQUE,
   `make` VARCHAR(255) NULL,
   `model` VARCHAR(255) NULL,
   `year` INT NULL,
   `cost` INT NULL,
-  PRIMARY KEY (`cars_id`));
+  PRIMARY KEY (`car_id`));
+
 
 /*CREATE UNIQUE INDEX `category_id_UNIQUE` ON `cars_sold` (`cars_id` ASC) VISIBLE;*/
 
@@ -61,13 +65,16 @@ CREATE TABLE IF NOT EXISTS `cars_sold` (
 DROP TABLE IF EXISTS `payment_type` ;
 
 CREATE TABLE IF NOT EXISTS `payment_type` (
-  `card_number` INT NOT NULL,
+  `card_id` INT NOT NULL AUTO_INCREMENT,
+  `card_number` VARCHAR(16) NOT NULL,
   `name` VARCHAR(255) NULL,
   `exp_month` VARCHAR(15) NULL,
   `exp_year` INT NULL,
   `cvv` INT NULL,
   `type` VARCHAR(45) NULL,
-  PRIMARY KEY (`card_number`));
+  PRIMARY KEY (`card_id`),
+  CONSTRAINT UNIQUE (`card_number`, `type`)
+  );
 
 
 -- -----------------------------------------------------
@@ -77,23 +84,23 @@ DROP TABLE IF EXISTS `transaction` ;
 
 CREATE TABLE IF NOT EXISTS `transaction` (
   `buyers_id` INT NOT NULL,
-  `cars_id` INT NOT NULL,
+  `car_id` INT NOT NULL UNIQUE,
   `payment_id` INT NOT NULL,
-  `transaction_id` INT NOT NULL,
+  `transaction_id` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`transaction_id`),
   CONSTRAINT `buyers_id`
     FOREIGN KEY (`buyers_id`)
     REFERENCES `buyers` (`buyers_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `cars_id`
-    FOREIGN KEY (`cars_id`)
-    REFERENCES `cars_sold` (`cars_id`)
+  CONSTRAINT `car_id`
+    FOREIGN KEY (`car_id`)
+    REFERENCES `cars_sold` (`car_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `payment_id`
     FOREIGN KEY (`payment_id`)
-    REFERENCES `payment_type` (`card_number`)
+    REFERENCES `payment_type` (`card_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
