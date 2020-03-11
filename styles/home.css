@@ -7,6 +7,10 @@ body{
     background-image: linear-gradient(to right, #262626 , #6e6e6e,#262626);
 }
 
+nav{
+    background-color: #222222;
+}
+
 .button{
     margin: 3% 40%;
     width: 170px;
@@ -17,7 +21,7 @@ body{
     color: orange;
 }
 
-.container{
+.divCol{
     background-color: #bdbdbd;
 }
 
