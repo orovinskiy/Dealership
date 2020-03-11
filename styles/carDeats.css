@@ -1,0 +1,33 @@
+.list-group-item-secondary{
+    background-color: #5E5E5E;
+}
+
+.jumbotron{
+    padding: 2rem 1rem;
+    background-color: #303236;
+    color: lightgrey;
+}
+
+body{
+    background-image: linear-gradient(to right, #262626 , #6e6e6e,#262626);
+}
+
+.divCol{
+    background-color: #bdbdbd;
+    padding: 2%
+}
+
+nav{
+    background-color: #222222;
+}
+
+.btn-secondary{
+    background-color: #505050;
+}
+
+h3{
+    background-color: #E1E1E1;
+    text-align: center;
+    border-radius:2.5%;
+    padding: .3%
+}
