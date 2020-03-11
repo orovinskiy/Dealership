@@ -85,7 +85,7 @@ $f3->route("GET|POST /payment", function ($f3) {
     $f3->set("car",$jsonCar);
 
 
-    var_dump($jsonCar);
+    //var_dump($jsonCar);
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         var_dump($_POST);
         //add to hive to make form sticky
