@@ -21,7 +21,21 @@ $db = new Database();
 
 
 $f3->set("div",array(0,1,2,3,4,5,6,7,8,9));
-
+//creating a year array
+$f3->set("years",array(2020,2021,2022,2023,2024,2025,2026));
+//creating states array
+$f3->set("states", array('AL' => 'Alabama','AK' => 'Alaska','AZ' => 'Arizona','AR' => 'Arkansas',
+    'CA' => 'California','CO' => 'Colorado','CT' => 'Connecticut','DE' => 'Delaware','DC' => 'District Of Columbia',
+    'FL' => 'Florida','GA' => 'Georgia','HI' => 'Hawaii','ID' => 'Idaho','IL' => 'Illinois','IN' => 'Indiana',
+    'IA' => 'Iowa','KS' => 'Kansas','KY' => 'Kentucky','LA' => 'Louisiana','ME' => 'Maine','MD' => 'Maryland',
+    'MA' => 'Massachusetts','MI' => 'Michigan','MN' => 'Minnesota','MS' => 'Mississippi','MO' => 'Missouri',
+    'MT' => 'Montana','NE' => 'Nebraska','NV' => 'Nevada','NH' => 'New Hampshire','NJ' => 'New Jersey',
+    'NM' => 'New Mexico','NY' => 'New York','NC' => 'North Carolina','ND' => 'North Dakota','OH' => 'Ohio',
+    'OK' => 'Oklahoma','OR' => 'Oregon','PA' => 'Pennsylvania','RI' => 'Rhode Island','SC' => 'South Carolina',
+    'SD' => 'South Dakota','TN' => 'Tennessee','TX' => 'Texas','UT' => 'Utah','VT' => 'Vermont','VA' => 'Virginia',
+    'WV' => 'West Virginia','WI' => 'Wisconsin','WY' => 'Wyoming',));
+//creating array of months
+$f3->set("months", array('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'));
 
 //Define a default route
 $f3->route("GET /", function () {
@@ -55,14 +69,23 @@ $f3->route("GET /listings", function () {
 $f3->route("GET|POST /payment", function ($f3) {
     //instantiate a new validator object
     $validate = new Validator();
+    $file = file_get_contents('model/cars.json');
+    $jsonCar = json_decode($file,true);
+    $jsonCar = $jsonCar[$_GET['id']];
+    //add json car info to hive
+    $f3->set("car",$jsonCar);
 
-    var_dump($_GET);
+
+    var_dump($jsonCar);
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         var_dump($_POST);
         //add to hive to make form sticky
         $f3->set('payment',$_POST);
         //check to ensure form is valid
         if($validate->validForm()){
+            //writing to cars_sold table --->commenting out for the moment
+            $carID = $GLOBALS['db']->addCar($jsonCar);
+
             //writing info to buyer table
             $buyerID = $GLOBALS['db']->addBuyers($_POST);
 
@@ -70,11 +93,14 @@ $f3->route("GET|POST /payment", function ($f3) {
             $paymentID = $GLOBALS['db']->addPayment($_POST);
             echo $paymentID;
 
-            //writing to cars_sold table --->commenting out for the moment
-            //$GLOBALS['db']->addCar($needtofigureouthowtosendcarinfo);
-
-            //writing to transaction table ---->adding car ID of 15 to just test
-            $GLOBALS['db']->addTransaction($buyerID, 17, $paymentID);
+            //check to see if car has already been purchased
+            if($carID == 00){
+                echo"this car has been sold";
+            }
+            else {
+                //writing to transaction table
+                $GLOBALS['db']->addTransaction($buyerID, $carID, $paymentID);
+            }
 
             //reroute to thank you page
             $f3->reroute("/thank");
@@ -89,7 +115,7 @@ $f3->route("GET|POST /payment", function ($f3) {
     echo $view->render("views/payment-form.html");
 });
 
-$f3->route("GET /thank", function () {
+$f3->route("GET /thank", function ($f3) {
     $view = new Template();
     echo $view->render("views/thank-you.html");
 });
