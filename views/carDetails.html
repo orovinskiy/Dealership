@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styles/carDeats.css">
 
     <title>Car Information</title>
 </head>
@@ -16,7 +17,7 @@
         <h1 class="font-weight-lighter text-center">Details About {{@make}}</h1>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-6 col-12">
             <div class="carousel slide carousel-fade" id="homeCarousel" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#homeCarousel" data-slide-to="0" class="active"></li>
@@ -45,14 +46,24 @@
             </span>
                 </a>
             </div>
+            <hr>
+            <h3 class="text-success">Cost: ${{@cost}}</h3>
+            <a class="btn btn-secondary mb-3 btn-block" href="../payment?id={{@id}}">Buy Now!</a>
         </div>
-        <div class="col-6">
-
+        <div class="col-md-6 col-12">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Engine:</strong> {{@engine}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Transmission:</strong> {{@transmission}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Horsepower:</strong> {{@horse}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Drive line:</strong> {{@driveline}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Classification:</strong> {{@classification}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Highway MPG:</strong> {{@highway}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>City MPG:</strong> {{@city}}</li>
+                <li class="list-group-item list-group-item-secondary text-light"><strong>Fuel Type:</strong> {{@fuel}}</li>
+            </ul>
         </div>
     </div>
-    <a class="btn btn-secondary" href="../payment?id={{@id}}">Buy Now!</a>
 </div>
-    <p>{{ @make }}</p>
 
 <!-- jQuery first, then Popper.js, Bootstrap JS then personal validation script-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
