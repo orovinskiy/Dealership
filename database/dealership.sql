@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `buyers` (
   `city` VARCHAR(45) NULL,
   `state` VARCHAR(2) NULL,
   `zip` INT NULL,
-  `created_at` VARCHAR(45) NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`buyers_id`),
   CONSTRAINT UNIQUE (`last_name`, `first_name`)
   );
