@@ -13,6 +13,9 @@ error_reporting(E_ALL);
 //Require autoload file
 require("vendor/autoload.php");
 
+//starting a session
+session_start();
+
 //Instantiate F3
 $f3 = Base::instance();
 
@@ -122,6 +125,23 @@ $f3->route("GET|POST /payment", function ($f3) {
     }
     $view = new Template();
     echo $view->render("views/payment-form.html");
+});
+
+$f3->route("GET|POST /admin", function($f3){
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        var_dump($_POST);
+        $validate = new Validator();
+        //check to ensure login form is valid
+        if($validate->validLogin()) {
+
+        }
+        //form was not valid get errors
+        else{
+            $f3->set('errors', $validate->getErrors());
+        }
+    }
+        $view = new Template();
+   echo $view->render("views/admin-login.php");
 });
 
 $f3->route("GET /thank", function ($f3) {
