@@ -40,6 +40,15 @@ class Validator
 
     }
 
+    //function to validate login form
+    function validLogin()
+    {
+        $this->validUsername($_POST['username']);
+        $this->validPassword($_POST['password']);
+
+        //if the $errors array is empty, then we have valid data
+        return empty($this->_errors);
+    }
     private function validFirst($first)
     {
         //First name are required
@@ -141,4 +150,21 @@ class Validator
             $this->_errors['cvv'] = "Valid CVV number is required";
         }
     }
+    private function validUsername($username)
+    {
+        //Username is required
+        if (empty($username)){
+            $this->_errors['username'] = "Username is required";
+        }
+    }
+
+    private function validPassword($password)
+    {
+        //Password is required
+        if (empty($password)){
+            $this->_errors['password'] = "Password is required";
+        }
+    }
+
+
 }
