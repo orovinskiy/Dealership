@@ -1,4 +1,6 @@
 composer.lock
 vendor/
 tmp/
-model/config-dealership.php
+config-dealership.php
+images
+
