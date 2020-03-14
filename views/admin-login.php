@@ -24,13 +24,16 @@ error_reporting(E_ALL);
 
                 <div class="form-group">
                     <label  for ="password"><h2>&nbspPassword: </h2></label>
-                    <input type="text" id="password" name="password">
+                    <input type="password" id="password" name="password">
                     <check if="{{ @errors['password'] }}">
                         <p class="err-validate">{{ @errors['password'] }}</p>
                     </check>
 
                 </div>
                 <button class="btn btn-primary mb-3" type="submit" id="login" name="submit" value="submit">Login</button>
+                <check if ="{{ @loginError }}">
+                    <p class="err-validate">{{ @loginError }}</p>
+                </check>
             </form>
         </div>
 
