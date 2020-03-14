@@ -21,19 +21,19 @@ class Validator
     function validForm()
     {
         //to be filled out
-        $this->validFirst($_POST['firstName']);
-        $this->validLast($_POST['lastName']);
-        $this->validNumber($_POST['phoneNumber']);
-        $this->validEmail($_POST['email']);
-        $this->validAddress($_POST['address']);
-        $this->validCity($_POST['city']);
-        $this->validState($_POST['state']);
-        $this->validZip($_POST['zipCode']);
-        $this->validName($_POST['cardName']);
-        $this->validCardNumber($_POST['cardNumber']);
-        $this->validMonth($_POST['monthExp']);
-        $this->validYear($_POST['yearExp']);
-        $this->validCVV($_POST['cvv']);
+        $this->validFirst(trim($_POST['firstName']));
+        $this->validLast(trim($_POST['lastName']));
+        $this->validNumber(trim($_POST['phoneNumber']));
+        $this->validEmail(trim($_POST['email']));
+        $this->validAddress(trim($_POST['address']));
+        $this->validCity(trim($_POST['city']));
+        $this->validState(trim($_POST['state']));
+        $this->validZip(trim($_POST['zipCode']));
+        $this->validName(trim($_POST['cardName']));
+        $this->validCardNumber(trim($_POST['cardNumber']));
+        $this->validMonth(trim($_POST['monthExp']));
+        $this->validYear(trim($_POST['yearExp']));
+        $this->validCVV(trim($_POST['cvv']));
 
         //If the $errors array is empty, then we have valid data
         return empty($this->_errors);
@@ -107,7 +107,7 @@ class Validator
         }
     }
 
-    private function validname($name)
+    private function validName($name)
     {
         if(empty($name)){
             $this->_errors['name'] = "Name on card is required";
@@ -116,7 +116,7 @@ class Validator
 
     private function validCardNumber($cardNumber)
     {
-        if(empty($cardNumber) || !ctype_digit($cardNumber) || strlen($cardNumber) != 16){
+        if(!preg_match('/^\d{4}(-|\s)?\d{4}(-|\s)?\d{4}(-|\s)?\d{4}$/', $cardNumber)){
             $this->_errors['cardNumber'] = "Valid card number is required";
         }
     }
