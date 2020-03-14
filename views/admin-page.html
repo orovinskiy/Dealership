@@ -1,0 +1,100 @@
+<include href="views/navbar.html">
+
+    <div class="container divCol align-content-center"><!--main div for page-->
+        <h1 class="text-center">Transaction List</h1>
+        <div class='table'>
+            <table id="transaction-table" class="table">
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Buyer Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>City, State, Zip</th>
+                    <!--<th>State</th>
+                    <th>Zipcode</th>-->
+                    <th>Car Make</th>
+                    <th>Car Model</th>
+                    <th>Car Year</th>
+                    <th>Price</th>
+                    <th>Payment Method</th>
+                    <th>Sold</th>
+                    <th>Created At</th>
+                </tr>
+                </thead>
+                <tbody>
+                <repeat group="{{ @transactions }}" value="{{ @transaction}}">
+                    <tr>
+                        <td>{{ @transaction['transaction_id'] }}</td>
+                        <td>{{ @transaction['last_name'] }}, {{ @transaction['first_name'] }}</td>
+                        <td>{{ @transaction['phone'] }}</td>
+                        <td>{{ @transaction['email'] }}</td>
+                        <td>{{ @transaction['city'] }}, {{ @transaction['state'] }}, {{ @transaction['zip'] }}</td>
+                        <td>{{ @transaction['make'] }}</td>
+                        <td>{{ @transaction['model'] }}</td>
+                        <td>{{ @transaction['year'] }}</td>
+                        <td>{{ @transaction['cost'] }}</td>
+                        <td>{{ @transaction['type'] }}</td>
+                        <td>
+                            <div>
+                                <check if=" {{ @transaction['sold'] }} > 0">
+                                    <true>
+                                        <label class="form-check-label" for="isSold">Sold</label>
+                                        <input class="form-check-inline" type="checkbox" id="isSold" value="soldTrue"
+                                               name="isSold" checked>
+                                    </true>
+                                    <false>
+                                        <label class="form-check-label" for="isSold">Sold</label>
+                                        <input class="form-check-inline" type="checkbox" id="isSold" value="soldTrue"
+                                               name="isSold">
+
+                                    </false>
+                                </check>
+
+                            </div>
+                        </td>
+                        <td>{{ @transaction['created_at'] }}</td>
+
+                    </tr>
+                </repeat>
+                </tbody>
+            </table>
+        </div>
+    </div><!--main div for page-->
+
+    <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--
+        <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    -->
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/fc-3.3.0/r-2.2.3/datatables.min.js"></script>
+    <script>
+        /*$(document).ready( function () {
+                $('#transaction-table').DataTable();
+            } );*/
+        $(document).ready(function () {
+            document.body.style.display = "block";
+            var DTable = $('#transaction-table');
+            DTable.DataTable({
+                "order": [[0, 'desc']],
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal({
+                            header: function (row) {
+                                var data = row.data();
+                                return 'Details for ' + data[1];
+                            }
+                        }),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                    }
+                }
+            });
+        });
+    </script>
+
+
+    </body>
+    </html>

@@ -62,21 +62,17 @@ $f3->route("GET|POST /payment", function () {
     $GLOBALS['links']->payment();
 });
 
-$f3->route("GET|POST /admin", function($f3){
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        var_dump($_POST);
-        $validate = new Validator();
-        //check to ensure login form is valid
-        if($validate->validLogin()) {
+$f3->route("GET|POST /login", function($f3){
+    $GLOBALS['links']->login();
+});
 
-        }
-        //form was not valid get errors
-        else{
-            $f3->set('errors', $validate->getErrors());
-        }
-    }
-        $view = new Template();
-   echo $view->render("views/admin-login.php");
+$f3->route("GET /logout", function($f3){
+    $GLOBALS['links']->logout();
+});
+
+$f3->route("GET /admin", function (){
+    $GLOBALS['links']->admin();
+
 });
 
 //Route to a thank page after payment has been made
