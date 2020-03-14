@@ -10,6 +10,11 @@ class Controller
     }
 
     function home(){
+        if($_GET['source'] == 'logout'){
+            //var_dump($_GET['source']);
+            echo '<script>alert("You are now logged out, redirecting to Home Page")</script>';
+        }
+
         $view = new Template();
         echo $view->render("views/home.html");
     }
@@ -63,6 +68,7 @@ class Controller
 
                 //writing info to buyer table
                 $buyerID = $GLOBALS['db']->addBuyers($_POST);
+                var_dump($buyerID);
 
                 //writing to payment_type table
                 $paymentID = $GLOBALS['db']->addPayment($_POST);
@@ -93,6 +99,60 @@ class Controller
     function thanks(){
         $view = new Template();
         echo $view->render("views/thank-you.html");
+    }
+
+    function login(){
+        //checking to see if user if already logged in if so redirects to admin table page
+        if(isset($_SESSION['username'])){
+            $this->_f3->reroute('/admin');
+        }
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //var_dump($_POST);
+            $validate = new Validator();
+            //check to ensure login form is valid
+            if($validate->validLogin()) {
+                //check to see if username password combo is correct
+                $result = $GLOBALS['db']->getLogin($_POST['username'], $_POST['password']);
+                if(!empty($result)){
+                    $_SESSION['username']= $_POST['username'];
+                    //redirect to admintable page
+                    $this->_f3->reroute("/admin");
+                }
+                else{
+                    $this->_f3->set('loginError',"Invalid Username/Password");
+                }
+            }
+            //form was not valid get errors
+            else{
+                $this->_f3->set('errors', $validate->getErrors());
+            }
+        }
+        $view = new Template();
+        echo $view->render("views/admin-login.php");
+    }
+
+    function admin(){
+        //checking to see if user if already logged in if not redirects to login page
+        if(!isset($_SESSION['username'])){
+            $this->_f3->reroute('/login');
+        }
+        //user is logged in
+        //grab all data from transactions table
+        $transactions = $GLOBALS['db']->getTransactions();
+        //var_dump($transactions);
+        //Assign f3 hive with transactions info
+        $this->_f3->set('transactions',$transactions);
+        $template = new Template();
+        echo $template->render('views/admin-page.html');
+
+        }
+
+    function logout(){
+        //destroying session with username info
+        session_destroy();
+        //redirecting to home page
+        $this->_f3->reroute('/?source=logout');
+
     }
 
 }

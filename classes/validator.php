@@ -3,6 +3,7 @@
 
 /**
  * Class for validation
+ * @author Dallas Sloan
  */
 class Validator
 {
