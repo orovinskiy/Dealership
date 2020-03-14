@@ -1,5 +1,5 @@
 <?php
-require_once ("config-dealership.php");
+require_once("model/config-dealership.php");
 
 class Database
 {

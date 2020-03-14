@@ -1,0 +1,34 @@
+/*
+ *This is the stylesheet for the payment-form.html page
+ * @author Oleg Rovinskiy
+ * @version 1.0
+ */
+.errForAll{
+    color: red;
+}
+
+.btn-secondary{
+    background-color: #505050;
+}
+
+img{
+    display: block;
+    height: auto;
+    width: 300px;
+}
+
+@media screen and (max-width: 1199px) {
+    img{
+        display: block;
+        height: auto;
+        width: 246px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    img{
+        display: block;
+        height: auto;
+        width: 170px;
+    }
+}
