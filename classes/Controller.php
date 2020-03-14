@@ -1,6 +1,5 @@
 <?php
 
-
 class Controller
 {
     private $_f3;

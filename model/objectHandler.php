@@ -1,4 +1,10 @@
 <?php
+/**
+ * this receives information from jsonObject.js and puts all the
+ * needed information into a card which is then echoed into the correct div.
+ * @author Oleg Rovinskiy
+ * @version 1.0
+ */
 
 //error reporting..
 ini_set("display_errors", 1);

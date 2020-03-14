@@ -1,5 +1,13 @@
+/**
+ * This file validates all the input fields as well as selects.
+ * It doesnt let the form post until everything is validated.
+ * After its posted the server validates the form once more.
+ * @author Oleg Rovinskiy
+ * @version 1.0
+ * @type {function(): boolean}
+ */
 
-
+//Checks to see if the form has been submitted
 document.getElementById('pay').onsubmit = validate;
 
 //All the regex and arrays used in validation
@@ -17,6 +25,12 @@ let states = ['AL','AK','AZ','AR', 'CA','CO','CT','DE','DC', 'FL','GA','HI','ID'
 let months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 let years = ['2020','2021','2022','2023','2024','2025','2026'];
 
+/**
+ * This function creates error messages if the input fields are
+ * invalid. It then shows all the errors. After it makes sure everything is valid
+ * it will allow the form to post.
+ * @returns {boolean} if the form is valid returns true
+ */
 function validate(){
     let isValid = true;
     let errors = document.getElementsByClassName('javaErr');
@@ -84,6 +98,16 @@ function validate(){
     return isValid;
 }
 
+/**
+ * This function tests each input field that is provided.
+ * then if the input is invalid it sets a correct error message
+ * to the dom.
+ * @param phoneRegex The regex the input is being checked against
+ * @param error the tag that holds the error
+ * @param input the value of the input
+ * @param errorMessage the error message you wish to display
+ * @returns {boolean} if the input is valid returns true
+ */
 function validInput(phoneRegex,error,input,errorMessage){
     input = input.trim();
     let match = new RegExp(phoneRegex);
@@ -95,6 +119,13 @@ function validInput(phoneRegex,error,input,errorMessage){
     return false;
 }
 
+/**
+ * Checks to see if the input has any information in it
+ * @param error the tag that holds the error message
+ * @param input the input value
+ * @param errorMessage the error message you wish to display
+ * @returns {boolean} if is not empty returns true
+ */
 function isEmpty(error,input,errorMessage){
     input = input.trim();
     if(input === ""){
@@ -104,6 +135,15 @@ function isEmpty(error,input,errorMessage){
     return true;
 }
 
+/**
+ * Checks the select if the input provided matches the expected
+ * values. If not then form has been spoofed or left empty  and shows an error message.
+ * @param error the tag that holds the error message
+ * @param input the value of the input
+ * @param searchArray the array with the expected values
+ * @param errorMessage a error message you wish to display
+ * @returns {boolean} returns true if input is valid
+ */
 function validSelect(error,input,searchArray,errorMessage){
     input = input.trim();
     if(input === ""){

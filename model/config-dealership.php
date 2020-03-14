@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * This is the config file for the database connection.
+ * This will be moved to the home directory
+ */
 //config-dealership.php
 
 define("DB_DSN", "mysql:dbname=dsloangr_grcc");

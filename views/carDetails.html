@@ -1,3 +1,9 @@
+<!--
+This page displays the specific car that was chosen from the
+list.html
+@author Oleg Rovinskiy
+@version 1.0
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +17,7 @@
     <title>Car Information</title>
 </head>
 <body>
+<!-- Navbar specific to this page -->
 <nav class="navbar navbar-dark navbar-expand-sm">
     <div class="container">
         <a class="navbar-brand d-none d-sm-inline-block" href="../../Dealership">Car Dealers</a>
@@ -58,7 +65,8 @@
             <hr>
             <h3 class="text-success">Cost: ${{@cost}}</h3>
             <a class="btn btn-secondary mb-3 btn-block" href="../payment?id={{@id}}">Buy Now!</a>
-        </div>
+        </div><!-- Carousel -->
+        <!-- List Group -->
         <div class="col-md-6 col-12">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-secondary text-light"><strong>Engine:</strong> {{@engine}}</li>
@@ -70,9 +78,9 @@
                 <li class="list-group-item list-group-item-secondary text-light"><strong>City MPG:</strong> {{@city}}</li>
                 <li class="list-group-item list-group-item-secondary text-light"><strong>Fuel Type:</strong> {{@fuel}}</li>
             </ul>
-        </div>
-    </div>
-</div>
+        </div><!-- Column -->
+    </div><!-- Row -->
+</div><!-- Container -->
 
 <!-- jQuery first, then Popper.js, Bootstrap JS then personal validation script-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
