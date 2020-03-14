@@ -34,7 +34,7 @@ $f3->set("states", array('AL' => 'Alabama','AK' => 'Alaska','AZ' => 'Arizona','A
     'NM' => 'New Mexico','NY' => 'New York','NC' => 'North Carolina','ND' => 'North Dakota','OH' => 'Ohio',
     'OK' => 'Oklahoma','OR' => 'Oregon','PA' => 'Pennsylvania','RI' => 'Rhode Island','SC' => 'South Carolina',
     'SD' => 'South Dakota','TN' => 'Tennessee','TX' => 'Texas','UT' => 'Utah','VT' => 'Vermont','VA' => 'Virginia',
-    'WV' => 'West Virginia','WI' => 'Wisconsin','WY' => 'Wyoming',));
+    'WV' => 'West Virginia','WI' => 'Wisconsin','WY' => 'Wyoming'));
 //creating array of months
 $f3->set("months", array('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'));
 

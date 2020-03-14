@@ -8,7 +8,7 @@
 </header>
 
 <div class="container divCol align-items-center">
-    <form method="post" action="#">
+    <form id="pay" method="post" action="#">
         <div class="row"><!-- for entire form-->
             <div class="bord col-md-8"><!--form info that is not the cart -->
                 <h4>Buyer Information</h4>
@@ -17,7 +17,8 @@
                         <label for="firstName">First Name *</label>
                         <input type="text" class="form-control" id="firstName" name="firstName" value="{{ @payment['firstName'] }}">
                         <check if="{{ @errors['first'] }}">
-                            <span class="errForAll err-validate">{{ @errors['first'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['first'] }}</span></true>
+                            <false><span id="fName" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--first name div-->
@@ -25,7 +26,8 @@
                         <label for="lastName">Last Name *</label>
                         <input type="text" class="form-control" id="lastName" name="lastName" value="{{ @payment['lastName'] }}">
                         <check if="{{ @errors['last'] }}">
-                            <span class="errForAll err-validate">{{ @errors['last'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['last'] }}</span></true>
+                            <false><span id="lName" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--last name div-->
@@ -36,16 +38,18 @@
                         <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                placeholder="Ex. 999-999-9999" value="{{ @payment['phoneNumber'] }}">
                         <check if="{{ @errors['number'] }}">
-                            <span class="errForAll err-validate">{{ @errors['number'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['number'] }}</span></true>
+                            <false><span id="phone" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--contact number div-->
                     <div class="form-group col-md-6">
                         <label for="email">Email *</label>
                         <input type="text" class="form-control" id="email" name="email"
-                               placeholder="123@test.com" value="{{ @payment['email'] }}">
+                               placeholder="123@test.com" value="{{ @payment['email'] }}" maxlength="35">
                         <check if="{{ @errors['email'] }}">
-                            <span class="errForAll err-validate">{{ @errors['email'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['email'] }}</span></true>
+                            <false><span id="emailErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--email div-->
@@ -56,7 +60,8 @@
                         <input class="form-control" type="text" id="address" name="address"
                                placeholder="1234 Test St." value="{{ @payment['address'] }}">
                         <check if="{{ @errors['address'] }}">
-                            <span class="errForAll err-validate">{{ @errors['address'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['address'] }}</span></true>
+                            <false><span id="addy" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div>
@@ -73,7 +78,8 @@
                         <label for="city">City *</label>
                         <input class="form-control" type="text" id="city" name="city" value="{{ @payment['city'] }}">
                         <check if="{{ @errors['city'] }}">
-                            <span class="errForAll err-validate">{{ @errors['city'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['city'] }}</span></true>
+                            <false><span id="cityErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--City-->
@@ -94,7 +100,8 @@
                             </repeat>
                         </select>
                         <check if="{{ @errors['state'] }}">
-                            <span class="errForAll err-validate">{{ @errors['state'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['state'] }}</span></true>
+                            <false><span id="stateErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--state-->
@@ -102,7 +109,8 @@
                         <label for="zipCode">Zip *</label>
                         <input type="text" class="form-control" id="zipCode" name="zipCode" value="{{ @payment['zipCode'] }}">
                         <check if="{{ @errors['zip'] }}">
-                            <span class="errForAll err-validate">{{ @errors['zip'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['zip'] }}</span></true>
+                            <false><span id="zipErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--zip-->
@@ -129,15 +137,17 @@
                         <input type="text" class="form-control" id="cardName" name="cardName"
                                placeholder="as displayed on card" value="{{ @payment['cardName'] }}">
                         <check if="{{ @errors['name'] }}">
-                            <span class="errForAll err-validate">{{ @errors['name'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['name'] }}</span></true>
+                            <false><span id="cardNameErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--Name on card-->
                     <div class="form-group col-md-6">
-                        <label for="cardName">Card Number *</label>
+                        <label for="cardNumber">Card Number *</label>
                         <input type="text" class="form-control" id="cardNumber" name="cardNumber" value="{{ @payment['cardNumber'] }}">
                         <check if="{{ @errors['cardNumber'] }}">
-                            <span class="errForAll err-validate">{{ @errors['cardNumber'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['cardNumber'] }}</span></true>
+                            <false><span id="cardNumErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--card number-->
@@ -150,7 +160,7 @@
                             <repeat group="{{ @months }}" value="{{ @month }}">
                                 <check if="{{ @payment['monthExp'] == @month }}">
                                     <true>
-                                        <option value="{{ @month }}"selected>{{ @month }}</option>
+                                        <option value="{{ @month }}" selected>{{ @month }}</option>
                                     </true>
                                     <false>
                                         <option value="{{ @month }}">{{ @month }}</option>
@@ -160,7 +170,8 @@
                             </repeat>
                         </select>
                         <check if="{{ @errors['month'] }}">
-                            <span class="errForAll err-validate">{{ @errors['month'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['month'] }}</span></true>
+                            <false><span id="monthErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--month exp-->
@@ -171,7 +182,7 @@
                         <repeat group="{{ @years }}" value="{{ @year }}">
                             <check if="{{ @payment['yearExp'] == @year }}">
                                 <true>
-                                <option value="{{ @year }}"selected>{{ @year }}</option>
+                                <option value="{{ @year }}" selected>{{ @year }}</option>
                                 </true>
                                 <false>
                                     <option value="{{ @year }}">{{ @year }}</option>
@@ -189,7 +200,8 @@
                             <option value="2026">2026</option>-->
                         </select>
                         <check if="{{ @errors['year'] }}">
-                            <span class="errForAll err-validate">{{ @errors['year'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['year'] }}</span></true>
+                            <false><span id="yearErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--year exp-->
@@ -197,7 +209,8 @@
                         <label for="cvv">CVV *</label>
                         <input class="form-control" type="text" id="cvv" name="cvv" value="{{ @payment['cvv'] }}">
                         <check if="{{ @errors['cvv'] }}">
-                            <span class="errForAll err-validate">{{ @errors['cvv'] }}</span>
+                            <true><span class="errForAll err-validate">{{ @errors['cvv'] }}</span></true>
+                            <false><span id="cvvErr" class="javaErr errForAll"></span></false>
                         </check>
 
                     </div><!--CVV-->
@@ -242,6 +255,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="model/validation.js"></script>
 
 </body>
 </html>
