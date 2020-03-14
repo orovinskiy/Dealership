@@ -13,6 +13,9 @@ error_reporting(E_ALL);
 //Require autoload file
 require("vendor/autoload.php");
 
+//starting a session
+session_start();
+
 //Instantiate F3
 $f3 = Base::instance();
 
@@ -57,6 +60,19 @@ $f3->route("GET /listings", function () {
 //creating a payment route
 $f3->route("GET|POST /payment", function () {
     $GLOBALS['links']->payment();
+});
+
+$f3->route("GET|POST /login", function($f3){
+    $GLOBALS['links']->login();
+});
+
+$f3->route("GET /logout", function($f3){
+    $GLOBALS['links']->logout();
+});
+
+$f3->route("GET /admin", function (){
+    $GLOBALS['links']->admin();
+
 });
 
 //Route to a thank page after payment has been made
