@@ -49,7 +49,7 @@ function validate(){
     let errorCity = 'Please provide a city (Only letters allowed)';
     let errorState = 'Select a valid state';
     let errorZip = 'Can only be 5 numbers long';
-    let errorCard = 'Must be 12 digits long';
+    let errorCard = 'Must be 16 digits long';
     let errorMonth = 'Select a valid month';
     let errorYear = 'Select a valid year';
     let errorCVV = 'Must be 3 digits long';

@@ -1,0 +1,23 @@
+.container{
+    background-color: #bdbdbd;
+    padding: 2%
+}
+
+body{
+    background-image: linear-gradient(to right, #262626 , #6e6e6e,#262626);
+}
+
+section div {
+    background-color: #d6d8db;
+}
+
+.btn{
+    background-color: #505050;
+    margin: 3% 32%;
+}
+
+.jumbotron{
+    padding: 2rem 1rem;
+    background-color: #303236;
+    color: lightgrey;
+}
