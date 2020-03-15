@@ -18,7 +18,6 @@ echo '
             src="images/carPics/'.$_POST["Identification"]["Make"].'.jpg" alt="LinkedIn Profile">
             <div class="card-body">
                 <h3 class="card-title">'.$_POST["Identification"]["Model Year"].'</h3>
-                <p class="card-text"></p>
                 <p class="card-text">This bad boy is '.$_POST["Engine_Information"]["Driveline"].' and
                  its horsepower is at '.$_POST["Engine_Information"]["Engine Statistics"]["Horsepower"].'.
                  Still not sold? Click the button below for more information!
