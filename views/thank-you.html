@@ -5,16 +5,67 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/thanks.css">
+
     <title>Thank You </title>
 </head>
 <body>
-<check if="{{ isset(@sold) }}">
-    <false>
-        <h1>{{ @sold }}</h1>
-    </false>
-</check>
-<h1>Thank you for purchasing a vehicle from us! {{ @carID }}</h1>
-<h4>This will be updated to show purchase information</h4>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="font-weight-lighter text-center">Thank you for purchasing a vehicle from us! {{ @carID }}</h1>
+    </div>
+    <hr>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Name:</strong> {{ucfirst(@session['lastName'])}}, {{ucfirst(@session['firstName'])}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Phone:</strong> {{@session['phoneNumber']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Email:</strong> {{@session['email']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Delivery address:</strong> {{@session['address']}}, {{@session['state']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>City:</strong> {{@session['city']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Zip Code:</strong> {{@session['zipCode']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Payment Method:</strong> {{@session['paymentMethod']}}</li>
+                <li class="list-group-item list-group-item-secondary">
+                    <strong>Last 4 digits of your card number:</strong> {{@cardNum}}</li>
+            </ul>
+            <hr>
+            <a href="../Dealership" class="btn btn-secondary">Back to Home page</a>
+        </div>
+        <div class="col-md-6">
+            <section class="text-dark mb-5 card">
+                <img class="card-img-top img-fluid"
+                     src="images/carPics/{{@car['Identification']['Make']}}.jpg" alt="car">
+                <div class="card-body">
+                    <h3 class="card-title">{{@car['Identification']['Model Year']}}</h3>
+                    <p class="card-text">This car will be all yours after the dealer confirms
+                        your purchase.
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">
+                            <strong>Cost:</strong> ${{@car['Identification']['Cost']}}</li>
+                        <li class="list-group-item ">
+                            <strong>City MPG:</strong> {{@car['Fuel Information']['City mph']}}</li>
+                        <li class="list-group-item ">
+                            <strong>Engine Type:</strong> {{@car['Engine Information']['Engine Type']}}</li>
+                    </ul>
+                </div>
+            </section> <!-- Card -->
+        </div>
+    </div>
+</div>
 
+<!-- jQuery first, then Popper.js, Bootstrap JS then personal validation script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

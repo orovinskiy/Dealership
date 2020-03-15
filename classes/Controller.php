@@ -52,7 +52,7 @@ class Controller
         $validate = new Validator();
         $file = file_get_contents('model/cars.json');
         $jsonCar = json_decode($file,true);
-        $jsonCar = $jsonCar[$_GET['id']];
+        $_SESSION['dealerJSONCar'] = $jsonCar = $jsonCar[$_GET['id']];
         //add json car info to hive
         $this->_f3->set("car",$jsonCar);
 
@@ -84,6 +84,7 @@ class Controller
                 }
 
                 //reroute to thank you page
+                $_SESSION['postDealer'] = $_POST;
                 $this->_f3->reroute("/thank");
             }
             else{
@@ -97,8 +98,16 @@ class Controller
     }
 
     function thanks(){
+        $this->_f3->set('session',$_SESSION['postDealer']);
+        $this->_f3->set('car',$_SESSION['dealerJSONCar']);
+        $this->_f3->set('cardNum','****-****-****-'.substr($_SESSION['postDealer']['cardNumber'],
+            (strlen($_SESSION['postDealer']['cardNumber'])-4)));
+
         $view = new Template();
         echo $view->render("views/thank-you.html");
+
+        unset($_SESSION['postDealer']);
+        unset($_SESSION['dealerJSONCar']);
     }
 
     function login(){
