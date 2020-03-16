@@ -7,14 +7,14 @@ error_reporting(E_ALL);
 <include href="views/navbar.html">
 
 
-        <div class="jumbotron"> <!-- Header -->
+        <div class="jumbotron text-center"> <!-- Header -->
             <h1 class="display-4">Admin Login</h1>
             <p>Admins, Please login below</p>
         </div>
         <div class="container divCol text-center"> <!--full form div -->
             <form method="post" action="#">
                 <div class="form-group mt-2">
-                    <label for="username"><h2>Username:</h2> </label>
+                    <label class="h2" for="username">Username: </label>
                     <input class="" type="text" id="username" name="username">
                     <check if="{{ @errors['username'] }}">
                         <p class="err-validate">{{ @errors['username'] }}</p>
@@ -23,7 +23,7 @@ error_reporting(E_ALL);
                 </div>
 
                 <div class="form-group">
-                    <label  for ="password"><h2>&nbspPassword: </h2></label>
+                    <label class="h2"  for ="password">&nbsp;Password:</label>
                     <input type="password" id="password" name="password">
                     <check if="{{ @errors['password'] }}">
                         <p class="err-validate">{{ @errors['password'] }}</p>

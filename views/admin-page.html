@@ -6,6 +6,7 @@
             <table id="transaction-table" class="table">
                 <thead>
                 <tr>
+                    <th>Delete Transaction?</th>
                     <th>Buyer Name</th>
                     <th>Phone</th>
                     <th>Email</th>
@@ -13,7 +14,6 @@
                     <th>Car Make/Model</th>
                     <th>Price</th>
                     <th>Purchase</th>
-                    <th>Transaction ID</th>
                     <th>Sold Date</th>
                     <th>Payment Method</th>
                 </tr>
@@ -21,6 +21,11 @@
                 <tbody>
                 <repeat group="{{ @transactions }}" value="{{ @transaction}}">
                     <tr>
+                        <td data-row="{{@transaction['transaction_id']}}">
+                            <input class="delete" type="checkbox" name="record"
+                                   data-tid="{{ @transaction['transaction_id'] }}"
+                                   data-in-row="{{@transaction['transaction_id']}}">
+                              {{ @transaction['transaction_id'] }}</td>
                         <td>{{ @transaction['last_name'] }}, {{ @transaction['first_name'] }}</td>
                         <td>{{ @transaction['phone'] }}</td>
                         <td>{{ @transaction['email'] }}</td>
@@ -39,8 +44,6 @@
                                     >Complete</label>
                             </div>
                         </td>
-                        <td>{{ @transaction['transaction_id'] }}&nbsp<input class="delete" type="checkbox" name="record"
-                                                                            data-tid="{{ @transaction['transaction_id'] }}"></td>
                         <td>{{ date('m/d/y',strtotime(substr(@transaction['created_at'],
                             0,strpos(@transaction['created_at']," ")))) }}</td>
                         <td>{{ @transaction['type'] }}</td>
@@ -66,98 +69,6 @@
     -->
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/fc-3.3.0/r-2.2.3/datatables.min.js"></script>
-    <script>
-        /*$(document).ready( function () {
-                $('#transaction-table').DataTable();
-            } );*/
-        let table = $(document).ready(function () {
-            document.body.style.display = "block";
-            DTable = $('#transaction-table');
-            DTable.DataTable({
-                "order": [[0, 'desc']],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function (row) {
-                                var data = row.data();
-                                return 'Details for ' + data[1];
-                            }
-                        }),
-                        renderer: $.fn.dataTable.Responsive.renderer.tableAll()
-                    }
-                }
-            });
-        });
-
-        //function to delete rows
-        $(".delete-row").on('click',function () {
-            let count = 0;
-            $("table tbody").find('input[name ="record"]').each(function () {
-               if($(this).is(":checked")){
-                   let tid = $(this).attr('data-tid');
-                   let func = "deleteTran";
-                   //keeping track of number of rows deleted
-                   count++;
-                   $.post('model/functions.php',{$tid:tid, $func:func});
-               }
-            });
-            if(count == 0){
-                alert("No rows selected to delete");
-            }
-            else {
-                location.reload(true);
-            }
-        });
-
-        //update sold status
-        $('.isSold').on('click', function () {
-            let sold;
-            if($(this).attr('checked') == 'checked'){
-                sold = 0;
-            }
-            else{
-                sold = 1;
-            }
-            //transaction id of transaction being updated
-            let tid = $(this).attr('data-tid');
-            //alert(sold);
-            let func = "updateSold";
-            //data['func'] = "updateSold";
-            $.post('model/functions.php', {$sold: sold, $func: func, $tid:tid});
-            //alert("did this work original?");
-            //forcing the page to reload so they can click on the checkbox multiple times
-            location.reload(true);
-            //DTable.ajax.reload();
-
-        });
-
-
-        //currently not working within modal
-/*
-        $(document).on('click', 'div.dtr-modal select', function () {
-            $('.isSold').on('change', function () {
-                console.log($(this));
-                let sold;
-                if($(this).attr('checked') == 'checked'){
-                    sold = 0;
-                }
-                else{
-                    sold = 1;
-                }
-                //transaction id of transaction being updated
-                let tid = $(this).attr('data-tid');
-                alert(tid);
-
-                let func = "updateSold";
-                //data['func'] = "updateSold";
-                $.post("model/functions.php", {$sold: sold, $func: func, $tid: tid});
-                alert("did this work?");
-
-            });
-        });
-*/
-    </script>
-
-
+    <script type="text/javascript" src="model/dataTable.js"></script>
     </body>
     </html>
