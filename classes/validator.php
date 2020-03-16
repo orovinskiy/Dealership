@@ -4,6 +4,7 @@
 /**
  * Class for validation
  * @author Dallas Sloan
+ * @version 1.1
  */
 class Validator
 {
@@ -19,6 +20,10 @@ class Validator
         return $this->_errors;
     }
 
+    /**
+     * function that validates the payment form on the server side. Returns true if valid, false otherwise
+     * @return bool; true if valid form, false if form is not valid
+     */
     function validForm()
     {
         //to be filled out
@@ -42,6 +47,11 @@ class Validator
     }
 
     //function to validate login form
+
+    /**
+     * function to validate the login page. Returns true if valid, false otherwise
+     * @return bool; true if form is valid, false if not valid
+     */
     function validLogin()
     {
         $this->validUsername($_POST['username']);
@@ -50,6 +60,7 @@ class Validator
         //if the $errors array is empty, then we have valid data
         return empty($this->_errors);
     }
+
     private function validFirst($first)
     {
         //First name are required
