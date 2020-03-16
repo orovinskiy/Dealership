@@ -1,7 +1,7 @@
 <?php
 /**
- * receives information from admin-page.html and calls all the correct functions
- * to update the database as directed
+ * receives information from admin-page.html ajax call, and calls  the correct function
+ * depending on which event handler was initiated
  * @author Dallas Sloan
  * @version 1.0
  */
@@ -14,10 +14,11 @@ include('database.php');
 
 $db = new Database();
 
-echo"hello World";
-var_dump($_POST);
+//var_dump($_POST);
 
+//check to see if POST is set
 if(isset($_POST['$func'])){
+    //two if statements to determine which function was called in the ajax call
     if($_POST['$func'] == 'updateSold'){
        $GLOBALS['db']->updateSold($_POST['$sold'], $_POST['$tid'] );
     }
