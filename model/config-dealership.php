@@ -5,6 +5,6 @@
  */
 //config-dealership.php
 
-define("DB_DSN", "mysql:dbname=orovinsk_grc");
-define("DB_USERNAME", "orovinsk_grcuser");
-define("DB_PASSWORD", 'AjihD9*h0@Dv');
+define("DB_DSN", "mysql:dbname=dsloangr_grcc");
+define("DB_USERNAME", "dsloangr_user");
+define("DB_PASSWORD", 'i%jCzZY(BWZn');
