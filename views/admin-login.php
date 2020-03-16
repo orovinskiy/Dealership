@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 ?>
-<include href="views/navbar.html">
+<include href="views/navbar.php">
 
 
         <div class="jumbotron"> <!-- Header -->

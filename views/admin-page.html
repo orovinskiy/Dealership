@@ -1,70 +1,64 @@
-<include href="views/navbar.html">
+<include href="views/navbar.php">
 
-    <div class="container divCol align-content-center"><!--main div for page-->
+    <div class="container divCol"><!--main div for page-->
         <h1 class="text-center">Transaction List</h1>
         <div class='table'>
             <table id="transaction-table" class="table">
                 <thead>
                 <tr>
-                    <th>Transaction ID</th>
                     <th>Buyer Name</th>
                     <th>Phone</th>
                     <th>Email</th>
                     <th>City, State, Zip</th>
-                    <!--<th>State</th>
-                    <th>Zipcode</th>-->
-                    <th>Car Make</th>
-                    <th>Car Model</th>
-                    <th>Car Year</th>
+                    <th>Car Make/Model</th>
                     <th>Price</th>
+                    <th>Purchase</th>
+                    <th>Transaction ID</th>
+                    <th>Sold Date</th>
                     <th>Payment Method</th>
-                    <th>Sold</th>
-                    <th>Created At</th>
                 </tr>
                 </thead>
                 <tbody>
                 <repeat group="{{ @transactions }}" value="{{ @transaction}}">
                     <tr>
-                        <td>{{ @transaction['transaction_id'] }}</td>
                         <td>{{ @transaction['last_name'] }}, {{ @transaction['first_name'] }}</td>
                         <td>{{ @transaction['phone'] }}</td>
                         <td>{{ @transaction['email'] }}</td>
                         <td>{{ @transaction['city'] }}, {{ @transaction['state'] }}, {{ @transaction['zip'] }}</td>
-                        <td>{{ @transaction['make'] }}</td>
                         <td>{{ @transaction['model'] }}</td>
-                        <td>{{ @transaction['year'] }}</td>
                         <td>{{ @transaction['cost'] }}</td>
-                        <td>{{ @transaction['type'] }}</td>
                         <td>
                             <div>
-                                <check if=" {{ @transaction['sold'] }} > 0">
-                                    <true>
-                                        <label class="form-check-label" for="isSold">Sold</label>
-                                        <input class="form-check-inline" type="checkbox" id="isSold" value="soldTrue"
-                                               name="isSold" checked>
-                                    </true>
-                                    <false>
-                                        <label class="form-check-label" for="isSold">Sold</label>
-                                        <input class="form-check-inline" type="checkbox" id="isSold" value="soldTrue"
-                                               name="isSold">
+                                <label class="form-check-label" for="isSold">
+                                    <input class="form-check-inline isSold" type="checkbox" id="isSold" value="1"
+                                           name="isSold" data-tid="{{ @transaction['transaction_id'] }}"
 
-                                    </false>
-                                </check>
-
+                                    <check if=" {{ @transaction['sold'] }} > 0">
+                                        checked = "checked"
+                                    </check>
+                                    >Complete</label>
                             </div>
                         </td>
+                        <td>{{ @transaction['transaction_id'] }}&nbsp<input class="delete" type="checkbox" name="record"
+                                                                            data-tid="{{ @transaction['transaction_id'] }}"></td>
                         <td>{{ @transaction['created_at'] }}</td>
-
+                        <td>{{ @transaction['type'] }}</td>
                     </tr>
                 </repeat>
                 </tbody>
             </table>
+            <Label>Delete Selected Transactions</Label>
+            <br>
+            <button type="button" class="delete-row btn btn-secondary mb-3">Delete Transaction</button>
         </div>
     </div><!--main div for page-->
 
     <script src="//code.jquery.com/jquery-3.3.1.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
     <!--
         <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
@@ -77,7 +71,7 @@
             } );*/
         $(document).ready(function () {
             document.body.style.display = "block";
-            var DTable = $('#transaction-table');
+            DTable = $('#transaction-table');
             DTable.DataTable({
                 "order": [[0, 'desc']],
                 responsive: {
@@ -93,6 +87,74 @@
                 }
             });
         });
+
+        //function to delete rows
+        $(".delete-row").on('click',function () {
+            let count = 0;
+            $("table tbody").find('input[name ="record"]').each(function () {
+               if($(this).is(":checked")){
+                   let tid = $(this).attr('data-tid');
+                   let func = "deleteTran";
+                   //keeping track of number of rows deleted
+                   count++;
+                   $.post('model/functions.php',{$tid:tid, $func:func});
+               }
+            });
+            if(count == 0){
+                alert("No rows selected to delete");
+            }
+            else {
+                location.reload(true);
+            }
+        });
+
+        //update sold status
+        $('.isSold').on('click', function () {
+            let sold;
+            if($(this).attr('checked') == 'checked'){
+                sold = 0;
+            }
+            else{
+                sold = 1;
+            }
+            //transaction id of transaction being updated
+            let tid = $(this).attr('data-tid');
+            //alert(sold);
+            let func = "updateSold";
+            //data['func'] = "updateSold";
+            $.post('model/functions.php', {$sold: sold, $func: func, $tid:tid});
+            //alert("did this work original?");
+            //forcing the page to reload so they can click on the checkbox multiple times
+            location.reload(true);
+            //DTable.ajax.reload();
+
+        });
+
+
+        //currently not working within modal
+/*
+        $(document).on('click', 'div.dtr-modal select', function () {
+            $('.isSold').on('change', function () {
+                console.log($(this));
+                let sold;
+                if($(this).attr('checked') == 'checked'){
+                    sold = 0;
+                }
+                else{
+                    sold = 1;
+                }
+                //transaction id of transaction being updated
+                let tid = $(this).attr('data-tid');
+                alert(tid);
+
+                let func = "updateSold";
+                //data['func'] = "updateSold";
+                $.post("model/functions.php", {$sold: sold, $func: func, $tid: tid});
+                alert("did this work?");
+
+            });
+        });
+*/
     </script>
 
 
