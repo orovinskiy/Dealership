@@ -1,12 +1,25 @@
 <?php
 require_once ("config-dealership.php");
 
+/**
+ * Database class for Dealership
+ * @author Dallas Sloan
+ * @version 1.2
+ * filename: database.php
+ *
+ * This is a class that creates a database object and queries the working database for the project
+ * Class Database
+ */
 class Database
 {
     //PDO object
     private $_dbh;
     private $_logged;
 
+    /**
+     * Constructor for the database class. Creates a new database object and sets the login status to false
+     * Database constructor.
+     */
     function __construct()
     {
         try {
@@ -19,6 +32,11 @@ class Database
         }
     }
 
+    /**
+     * function to create a new row in the buyers table within the database
+     * @param $buyer buyer object which contains all the specific buyer information
+     * @return string returns the primary key of the inserted buyer
+     */
     function addBuyers($buyer)
     {
         //does the buyer already exist?
@@ -53,7 +71,8 @@ class Database
             return $id;
 
     }
-    function getBuyer($buyer)
+    //function used to determine whether the buyer already exists in the database
+    private function getBuyer($buyer)
     {
         //1. Define the query
         $sql = "SELECT buyers_id from buyers WHERE last_name = :lastName and first_name = :firstName";
@@ -75,6 +94,11 @@ class Database
     }
 
 
+    /**
+     * Function to create a new payment row in the payment_type table within the database
+     * @param $payment payment objecct which holds all the informatino about the payment being added
+     * @return string returns the primary key of the payment_type that was added
+     */
     function addPayment($payment)
     {
         //does the payment already exist?
@@ -105,7 +129,9 @@ class Database
         $id = $this->_dbh->lastInsertId();
         return $id;
     }
-    function getPayment($payment)
+
+    //function to check if the payment info already exists in the database
+    private function getPayment($payment)
     {
         //1. Define the query
         $sql = "SELECT card_id from payment_type WHERE card_number = :cardNumber and type = :type";
@@ -127,6 +153,11 @@ class Database
     }
 
 
+    /**
+     * Function to create a new row in the cars_sold table within the database
+     * @param $car object which holds all the information pertaining to the car that was purchased
+     * @return string the primary key of the row inserted into the cars_sold table
+     */
     function addCar($car)
     {
         //1. Define the query
@@ -153,6 +184,13 @@ class Database
 
     }
 
+    /**
+     * function that creates a new row in our joining transaction table
+     * @param $buyerID primary key from buyers table
+     * @param $carID primary key from cars_sold table
+     * @param $paymentID primary key from payment_type table
+     * @return string the primary key of the row inserted into the transaction table
+     */
     function addTransaction($buyerID, $carID, $paymentID)
     {
         //1. Define the query
@@ -176,11 +214,13 @@ class Database
 
     }
 
-    //create function to get a specific car, payment, or buyer id to prevent duplicates and to send the correct index
-    //to the transaction table
-
-
     //function to get all transactions
+
+    /**
+     * Function to get all rows from transactions table. Joins multiple tables together to return an object
+     * of inforamtion concerning all transactions
+     * @return array of information from transaction table as well as all linking tables.
+     */
     function getTransactions()
     {
         //1. define the query
@@ -208,6 +248,14 @@ class Database
     }
 
     //function to check if login info is correct
+
+    /**
+     * Function to validate the username and password submitted upon logging in as admin
+     * @param $username username input from login page
+     * @param $password password input from login page
+     * @return mixed either returns null if not valid or the username and password that was entered
+     * (returned password is returned as a hash for security)
+     */
     function getLogin($username, $password)
     {
         //hashing the password to md5 to match what is in the database
@@ -233,6 +281,12 @@ class Database
     }
 
     //updating sold column in transactions
+
+    /**
+     * Funciton to update the transaction table to mark whether or not the sale was completed
+     * @param $sold boolean value to tell whether the sale is completed or not
+     * @param $tid transaction_id to know which row to update
+     */
     function updateSold($sold, $tid)
     {
         //define the query
@@ -252,6 +306,11 @@ class Database
 
     //function to delete a transaction row
     //deleting both transaction and car id
+    /**
+     * Function to delete a row from both the transaction table and cars_sold table
+     * @param $tid transaction_id to know which row to delete from transaction table. Uses
+     * transaction_id to link to cars_sold to know which row to delete from this table as well
+     */
     function deleteTran($tid)
     {
         //define the query

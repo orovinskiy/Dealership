@@ -1,4 +1,10 @@
 <?php
+/*
+ * Login page for admin users
+ *
+ * @author Dallas Sloan
+ * @version 1.0
+ */
 //Turn on error reporting -- this is critical!
 ini_set('display_errors', 1);
 error_reporting(E_ALL);

@@ -1,14 +1,27 @@
 <?php
 
+/**
+ * Controller class for fat free templating
+ * @author Dallas Sloan, Oleg Rovinskiy
+ * @version 1.5
+ * Class Controller
+ */
 class Controller
 {
     private $_f3;
 
+    /**
+     * Controller constructor.
+     * @param $f3 fat free object
+     */
     function __construct($f3)
     {
         $this->_f3 = $f3;
     }
 
+    /**
+     * Function for home page.
+     */
     function home(){
         if($_GET['source'] == 'logout'){
             //var_dump($_GET['source']);
@@ -19,6 +32,10 @@ class Controller
         echo $view->render("views/home.html");
     }
 
+    /**
+     * function for the carDetails screen. Function sends data to document to have correct info show up.
+     * @param $item index of car being bought
+     */
     function buyCar($item){
         $file = file_get_contents('model/cars.json');
         $jsonCar = json_decode($file,true);
@@ -42,11 +59,19 @@ class Controller
         echo $view->render("views/carDetails.html");
     }
 
+    /**
+     * Function to handle the car listing page
+     */
     function listings(){
         $view = new Template();
         echo $view->render("views/lists.html");
     }
 
+    /**
+     * Function that handles all the data manuerving for the payment page.
+     *This function calls multiple database function to add inforamtion to the database.
+     *This function also updates the json file with cars that have been sold
+     */
     function payment(){
         //instantiate a new validator object
         $validate = new Validator();
@@ -119,6 +144,9 @@ class Controller
         echo $view->render("views/payment-form.html");
     }
 
+    /**
+     * Function to handle the thank you page. Thank you page will show summary of car that was bought.
+     */
     function thanks(){
         $this->_f3->set('session',$_SESSION['postDealer']);
         $this->_f3->set('car',$_SESSION['dealerJSONCar']);
@@ -132,6 +160,11 @@ class Controller
         unset($_SESSION['dealerJSONCar']);
     }
 
+    /**
+     * Function that handles the login page. Checks to see whether the user is logged in, if
+     * not forces them to login. Uses a database function to check whether the login information
+     * is successful. Upon success redirects to admin page.
+     */
     function login(){
         //checking to see if user if already logged in if so redirects to admin table page
         if(isset($_SESSION['username'])){
@@ -163,6 +196,10 @@ class Controller
         echo $view->render("views/admin-login.php");
     }
 
+    /**
+     * Function to handle the admin-page. Sends information to admin page to fill out the
+     * data table
+     */
     function admin(){
         //checking to see if user if already logged in if not redirects to login page
         if(!isset($_SESSION['username'])){
@@ -181,6 +218,10 @@ class Controller
 
         }
 
+    /**
+     * Function to handle the logout of an admin. Logout will destroy the session and
+     * redirect to home page of dealership.
+     */
     function logout(){
         //destroying session with username info
         session_destroy();
