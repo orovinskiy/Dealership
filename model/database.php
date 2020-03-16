@@ -182,7 +182,9 @@ class Database
     function getTransactions()
     {
         //1. define the query
-        $sql = "SELECT transaction.transaction_id, buyers.last_name, buyers.first_name, buyers.phone, buyers.email, buyers.city, buyers.state, buyers.zip, cars_sold.make, cars_sold.model, cars_sold.year, cars_sold.cost, payment_type.type,
+        $sql = "SELECT transaction.transaction_id, buyers.last_name, buyers.first_name, buyers.phone, buyers.email,
+                buyers.city, buyers.state, buyers.zip, cars_sold.make, cars_sold.model, cars_sold.year, cars_sold.cost,
+                 payment_type.type,
                 transaction.sold, transaction.created_at
                 FROM transaction
                 JOIN buyers ON transaction.buyers_id = buyers.buyers_id
@@ -225,6 +227,44 @@ class Database
         //5. Get the result
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result;
+
+    }
+
+    //updating sold column in transactions
+    function updateSold($sold, $tid)
+    {
+        //define the query
+        $sql = "UPDATE transaction SET sold = :sold where transaction_id = :tid ";
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind parameter
+        $statement->bindParam(':sold', $sold);
+        $statement->bindParam(':tid', $tid);
+
+        //execute the statement
+        $statement->execute();
+
+    }
+
+    //function to delete a transaction row
+    //deleting both transaction and car id
+    function deleteTran($tid)
+    {
+        //define the query
+        $sql = "DELETE transaction, cars_sold from transaction
+JOIN cars_sold WHERE transaction.car_id = cars_sold.car_id and transaction.transaction_id = :tid;";
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind parameter
+        $statement->bindParam(':tid', $tid);
+
+        //execute the statement
+        $statement->execute();
+
 
     }
 
