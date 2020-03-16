@@ -60,7 +60,7 @@ $('.isSold').on('click', function () {
     $.post('model/functions.php', {$sold: sold, $func: func, $tid:tid});
     //alert("did this work original?");
     //forcing the page to reload so they can click on the checkbox multiple times
-    //location.reload(true);
+    location.reload(true);
     //DTable.ajax.reload();
 
 });
