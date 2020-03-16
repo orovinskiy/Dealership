@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * Controller class for fat free templating
+ * @author Dallas Sloan, Oleg Rovinskiy
+ * @version 1.5
+ * Class Controller
+ */
 class Controller
 {
     private $_f3;
 
+    /**
+     * Controller constructor.
+     * @param $f3 fat free object
+     */
     function __construct($f3)
     {
         $this->_f3 = $f3;
@@ -47,6 +57,11 @@ class Controller
         echo $view->render("views/lists.html");
     }
 
+    /**
+     * Function that handles all the data manuerving for the payment page.
+     *This function calls multiple database function to add inforamtion to the database.
+     *This function also updates the json file with cars that have been sold
+     */
     function payment(){
         //instantiate a new validator object
         $validate = new Validator();
@@ -132,6 +147,11 @@ class Controller
         unset($_SESSION['dealerJSONCar']);
     }
 
+    /**
+     * Function that handles the login page. Checks to see whether the user is logged in, if
+     * not forces them to login. Uses a database function to check whether the login information
+     * is successful. Upon success redirects to admin page.
+     */
     function login(){
         //checking to see if user if already logged in if so redirects to admin table page
         if(isset($_SESSION['username'])){
@@ -163,6 +183,10 @@ class Controller
         echo $view->render("views/admin-login.php");
     }
 
+    /**
+     * Function to handle the admin-page. Sends information to admin page to fill out the
+     * data table
+     */
     function admin(){
         //checking to see if user if already logged in if not redirects to login page
         if(!isset($_SESSION['username'])){
@@ -181,6 +205,10 @@ class Controller
 
         }
 
+    /**
+     * Function to handle the logout of an admin. Logout will destroy the session and
+     * redirect to home page of dealership.
+     */
     function logout(){
         //destroying session with username info
         session_destroy();
