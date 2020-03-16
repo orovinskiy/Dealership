@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/fc-3.3.0/r-2.2.3/datatables.min.css"/>
+
+    <title>Car Dealer</title>
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-expand-sm">
+    <div class="container">
+        <a class="navbar-brand d-none d-sm-inline-block" href="../Dealership">Car Dealers</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="../Dealership">Home</a>
+            <a class="nav-item nav-link" href="../Dealership/listings">Listings</a>
+            <a class="nav-item nav-link" href="../Dealership/login">Admin</a>
+            <?php
+            if (isset($_SESSION['username'])) {
+                echo "<a class=\"nav-item nav-link\" href=\"../Dealership/logout\">Logout</a>";
+            }
+            echo "<p>hello world!</p>";
+            ?>
+        </div>
+    </div>
+</nav>

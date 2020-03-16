@@ -51,8 +51,8 @@ class Controller
         //instantiate a new validator object
         $validate = new Validator();
         $file = file_get_contents('model/cars.json');
-        $jsonCar = json_decode($file,true);
-        $_SESSION['dealerJSONCar'] = $jsonCar = $jsonCar[$_GET['id']];
+        $jsonCarFull = json_decode($file,true);
+        $_SESSION['dealerJSONCar'] = $jsonCar = $jsonCarFull[$_GET['id']];
         //add json car info to hive
         $this->_f3->set("car",$jsonCar);
 
@@ -63,12 +63,12 @@ class Controller
             $this->_f3->set('payment',$_POST);
             //check to ensure form is valid
             if($validate->validForm()){
-                //writing to cars_sold table --->commenting out for the moment
+                //writing to cars_sold table
                 $carID = $GLOBALS['db']->addCar($jsonCar);
 
                 //writing info to buyer table
                 $buyerID = $GLOBALS['db']->addBuyers($_POST);
-                var_dump($buyerID);
+                //var_dump($buyerID);
 
                 //writing to payment_type table
                 $paymentID = $GLOBALS['db']->addPayment($_POST);
@@ -82,10 +82,32 @@ class Controller
                     //writing to transaction table
                     $GLOBALS['db']->addTransaction($buyerID, $carID, $paymentID);
                 }
+                //rewriting to json file to update the car sold status to true.
+                //find the correct car id in file and set sold to true
+                $indexCount = 0;
+                $arrayIndex = -1;
+
+                foreach ($jsonCarFull as $index ) {
+                    if ($index["Identification"]["ID"] == $jsonCar["Identification"]["ID"]) {
+                        $arrayIndex = $indexCount;
+                    }
+                    $indexCount++;
+                }
+                //match was found
+                if($arrayIndex >= 0){
+                    $jsonCarFull[$arrayIndex]['Sold'] = true;
+                    //encode file back to json
+                    $jsonDecode = json_encode($jsonCarFull);
+                    file_put_contents('model/cars.json', $jsonDecode);
+
+                }
+
 
                 //reroute to thank you page
                 $_SESSION['postDealer'] = $_POST;
                 $this->_f3->reroute("/thank");
+                var_dump($jsonCar);
+
             }
             else{
                 //Data was not valid
@@ -148,11 +170,17 @@ class Controller
         //user is logged in
         //grab all data from transactions table
         $transactions = $GLOBALS['db']->getTransactions();
-        //var_dump($transactions);
+        //update date sold to a more readable format
+        //$date = ($transactions['created_at']);
+
+        //$date = date("d-m-y",transactions['created_at']);
+
         //Assign f3 hive with transactions info
         $this->_f3->set('transactions',$transactions);
+        //$this->_f3->set('date',$date);
         $template = new Template();
         echo $template->render('views/admin-page.html');
+
 
         }
 

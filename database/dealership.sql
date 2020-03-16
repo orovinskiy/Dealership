@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `buyers` (
   `city` VARCHAR(45) NULL,
   `state` VARCHAR(2) NULL,
   `zip` INT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`buyers_id`),
   CONSTRAINT UNIQUE (`last_name`, `first_name`)
   );
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `cars_sold` (
   `model` VARCHAR(255) NULL,
   `year` INT NULL,
   `cost` INT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (`car_id`));
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `payment_type` (
   `exp_year` INT NULL,
   `cvv` INT NULL,
   `type` VARCHAR(45) NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (`card_id`),
   CONSTRAINT UNIQUE (`card_number`, `type`)
@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `car_id` INT NOT NULL UNIQUE,
   `payment_id` INT NOT NULL,
   `transaction_id` INT NOT NULL AUTO_INCREMENT,
-  `sold` INT NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `sold` INT NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (`transaction_id`),
   CONSTRAINT `buyers_id`
