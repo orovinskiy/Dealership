@@ -24,6 +24,10 @@ list.html
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="../../Dealership">Home</a>
             <a class="nav-item nav-link" href="../../Dealership/listings">Listings</a>
+            <a class="nav-item nav-link" href="../../Dealership/login">Admin</a>
+            <check if="{{isset(@SESSION.login) && @SESSION.login == 'true'}}">
+                <a class="nav-item nav-link" href="../../Dealership/logout">Logout</a>
+            </check>
         </div>
     </div>
 </nav>

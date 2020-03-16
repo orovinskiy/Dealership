@@ -1,4 +1,4 @@
-<include href="views/navbar.php">
+<include href="views/navbar.html">
 
     <div class="container divCol"><!--main div for page-->
         <h1 class="text-center">Transaction List</h1>
@@ -41,7 +41,8 @@
                         </td>
                         <td>{{ @transaction['transaction_id'] }}&nbsp<input class="delete" type="checkbox" name="record"
                                                                             data-tid="{{ @transaction['transaction_id'] }}"></td>
-                        <td>{{ @transaction['created_at'] }}</td>
+                        <td>{{ date('m/d/y',strtotime(substr(@transaction['created_at'],
+                            0,strpos(@transaction['created_at']," ")))) }}</td>
                         <td>{{ @transaction['type'] }}</td>
                     </tr>
                 </repeat>
@@ -69,7 +70,7 @@
         /*$(document).ready( function () {
                 $('#transaction-table').DataTable();
             } );*/
-        $(document).ready(function () {
+        let table = $(document).ready(function () {
             document.body.style.display = "block";
             DTable = $('#transaction-table');
             DTable.DataTable({

@@ -5,12 +5,14 @@ class Database
 {
     //PDO object
     private $_dbh;
+    private $_logged;
 
     function __construct()
     {
         try {
             //Create a new PDO connection
             $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            $this->_logged = 'false';
             //echo "Connected!";
         } catch (PDOException $e) {
             echo $e->getMessage();
