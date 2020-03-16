@@ -19,6 +19,9 @@ class Controller
         $this->_f3 = $f3;
     }
 
+    /**
+     * Function for home page.
+     */
     function home(){
         if($_GET['source'] == 'logout'){
             //var_dump($_GET['source']);
@@ -29,6 +32,10 @@ class Controller
         echo $view->render("views/home.html");
     }
 
+    /**
+     * function for the carDetails screen. Function sends data to document to have correct info show up.
+     * @param $item index of car being bought
+     */
     function buyCar($item){
         $file = file_get_contents('model/cars.json');
         $jsonCar = json_decode($file,true);
@@ -52,6 +59,9 @@ class Controller
         echo $view->render("views/carDetails.html");
     }
 
+    /**
+     * Function to handle the car listing page
+     */
     function listings(){
         $view = new Template();
         echo $view->render("views/lists.html");
@@ -134,6 +144,9 @@ class Controller
         echo $view->render("views/payment-form.html");
     }
 
+    /**
+     * Function to handle the thank you page. Thank you page will show summary of car that was bought.
+     */
     function thanks(){
         $this->_f3->set('session',$_SESSION['postDealer']);
         $this->_f3->set('car',$_SESSION['dealerJSONCar']);
