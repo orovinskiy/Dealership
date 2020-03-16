@@ -146,6 +146,7 @@ class Controller
                 $result = $GLOBALS['db']->getLogin($_POST['username'], $_POST['password']);
                 if(!empty($result)){
                     $_SESSION['username']= $_POST['username'];
+                    $_SESSION['login'] = 'true';
                     //redirect to admintable page
                     $this->_f3->reroute("/admin");
                 }
@@ -170,10 +171,6 @@ class Controller
         //user is logged in
         //grab all data from transactions table
         $transactions = $GLOBALS['db']->getTransactions();
-        //update date sold to a more readable format
-        //$date = ($transactions['created_at']);
-
-        //$date = date("d-m-y",transactions['created_at']);
 
         //Assign f3 hive with transactions info
         $this->_f3->set('transactions',$transactions);

@@ -22,6 +22,7 @@ $f3 = Base::instance();
 //create a new dealership object
 $db = new Database();
 $links = new Controller($f3);
+//var_dump($db->getLog());
 
 //CREATES THE CAR HOLDERS
 $f3->set("div",array(0,1,2,3,4,5,6,7,8,9));
